@@ -1,6 +1,6 @@
 # Work Quotes
 
-Work Quotes is a simple Android application that provides you with daily work-related quotes to keep you motivated and inspired.
+Work Quotes is a simple Android application that provides you with daily work-related quotes to keep you motivated and inspired. The app is built solely to explore and understand more about *WorkManager* for background tasks and *PendingIntent*.
 
 ## Tech Stack
 
