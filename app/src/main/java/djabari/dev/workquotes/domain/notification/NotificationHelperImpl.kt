@@ -12,9 +12,13 @@ import djabari.dev.workquotes.R
 import djabari.dev.workquotes.data.model.Quote
 import me.tatarka.inject.annotations.Inject
 
+interface NotificationHelper {
+    fun showQuoteNotification(quote: Quote)
+}
+
 @Inject
-class NotificationHelper(private val context: Context) {
-    companion object {
+class NotificationHelperImpl(private val context: Context) : NotificationHelper {
+    companion object Companion {
         const val CHANNEL_ID = "workquote_channel"
         const val GROUP_KEY_QUOTES = "workquotes_group"
     }
@@ -36,7 +40,7 @@ class NotificationHelper(private val context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun showQuoteNotification(quote: Quote) {
+    override fun showQuoteNotification(quote: Quote) {
         val notificationId = quote.id.toIntOrNull() ?: quote.hashCode()
 
         val intent = Intent(context, MainActivity::class.java).apply {

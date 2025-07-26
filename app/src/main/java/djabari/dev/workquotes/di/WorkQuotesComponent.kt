@@ -1,8 +1,6 @@
 package djabari.dev.workquotes.di
 
-import android.content.ClipboardManager
 import android.content.Context
-import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import djabari.dev.workquotes.data.datasource.local.WorkQuotesLocalDataSource
 import djabari.dev.workquotes.data.datasource.local.WorkQuotesLocalDataSourceImpl
@@ -13,7 +11,7 @@ import djabari.dev.workquotes.data.db.room.WorkQuotesDatabase
 import djabari.dev.workquotes.data.db.room.WorkQuotesDatabaseClient
 import djabari.dev.workquotes.data.db.room.dao.WorkQuotesDao
 import djabari.dev.workquotes.data.network.HttpClientFactory
-import djabari.dev.workquotes.domain.notification.NotificationHelper
+import djabari.dev.workquotes.domain.notification.NotificationHelperImpl
 import djabari.dev.workquotes.domain.repository.WorkQuotesRepository
 import djabari.dev.workquotes.domain.repository.WorkQuotesRepositoryImpl
 import djabari.dev.workquotes.domain.worker.ChildWorkerFactory
@@ -43,7 +41,7 @@ internal abstract class WorkQuotesComponent(@get:Provides val context: Context) 
     abstract val workQuotesRemoteDataSource: WorkQuotesRemoteDataSource
     abstract val workQuotesLocalDataSource: WorkQuotesLocalDataSource
     abstract val workQuotesRepository: WorkQuotesRepository
-    abstract val notificationHelper: NotificationHelper
+    abstract val notificationHelper: NotificationHelperImpl
     abstract val workQuoteWorkScheduler: QuoteWorkScheduler
     abstract val workQuoteWorkerFactory: WorkerFactory
 
@@ -79,8 +77,8 @@ internal abstract class WorkQuotesComponent(@get:Provides val context: Context) 
 
     @Provides
     @Singleton
-    fun provideNotificationHelper(context: Context): NotificationHelper {
-        return NotificationHelper(context)
+    fun provideNotificationHelper(context: Context): NotificationHelperImpl {
+        return NotificationHelperImpl(context)
     }
 
     @Provides
@@ -93,7 +91,7 @@ internal abstract class WorkQuotesComponent(@get:Provides val context: Context) 
     @Singleton
     fun provideQuoteWorkerFactory(
         repository: WorkQuotesRepository,
-        notificationHelper: NotificationHelper
+        notificationHelper: NotificationHelperImpl
     ): QuoteWorkerFactory {
         return QuoteWorkerFactory(repository, notificationHelper)
     }

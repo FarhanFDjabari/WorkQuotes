@@ -20,7 +20,12 @@ class QuoteWorkerFactory @Inject constructor(
     ): ListenableWorker? {
         return when (workerClassName) {
             QuoteFetchWorker::class.java.name -> {
-                QuoteFetchWorker(appContext, workerParameters, quoteRepository, notificationHelper)
+                QuoteFetchWorker(
+                    appContext,
+                    workerParameters,
+                    quoteRepository,
+                    notificationHelper
+                )
             }
             else -> null
         }

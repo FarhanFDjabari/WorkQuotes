@@ -11,4 +11,8 @@ class FakeRemoteDataSource : WorkQuotesRemoteDataSource {
     ): Result<List<QuoteResponse>> {
         return Result.Success(emptyList())
     }
+
+    override suspend fun getAvailableTags(): Result<List<String>> {
+        return Result.Success(emptyList())
+    }
 }
