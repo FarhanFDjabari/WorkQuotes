@@ -23,8 +23,8 @@ class FakeRemoteDataSource : WorkQuotesRemoteDataSource {
             Result.Success(
                 List(limit) {
                     QuoteResponse(
-                        id = "$it",
-                        content = "Content $it",
+                        id = it,
+                        quote = "Content $it",
                         author = "Quote Author $it",
                         tags = emptyList(),
                     )
@@ -32,6 +32,19 @@ class FakeRemoteDataSource : WorkQuotesRemoteDataSource {
             )
         } else {
             Result.Error(Exception("Invalid limit: must be greater than 0"))
+        }
+    }
+
+    override suspend fun getAvailableTags(): Result<List<String>> {
+        return safeApiCall {
+            if (isConnectionError) {
+                throw ConnectTimeoutException(
+                    message = "Connection Timeout",
+                    cause = Exception("Simulated connection error")
+                )
+            }
+
+            listOf("inspirational", "motivational", "life", "humor")
         }
     }
 }
